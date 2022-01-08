@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
       }
     ]
   })
-  .then(dbCategoryData => res.json(dbCategoryData))
+  .then(dbProductData => res.json(dbProductData))
   .catch(err => {
     console.log(err);
     res.status(500).json(err);
@@ -47,7 +47,7 @@ router.get('/:id', (req, res) => {
       }
     ]
   })
-  .then(dbCategoryData => res.json(dbCategoryData))
+  .then(dbProductData => res.json(dbProductData))
   .catch(err => {
     console.log(err);
     res.status(500).json(err);
@@ -69,6 +69,7 @@ router.post('/', (req, res) => {
     product_name: req.body.product_name,
     price: req.body.price,
     stock: req.body.stock,
+    category_id: req.body.category_id,
     tagIds: req.body.tagIds,
   })
     .then((product) => {
@@ -136,6 +137,16 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
+  Product.destroy({
+    where: {
+      id: req.params.id
+    }
+  })
+  .then(dbProductData => res.json(dbProductData))
+  .catch(err => {
+    console.log(err);
+    res.status(500).json(err);
+  });
 });
 
 module.exports = router;
